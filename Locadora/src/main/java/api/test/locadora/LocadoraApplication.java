@@ -1,4 +1,4 @@
-package emanoel.tests.ufc.api.locadora;
+package api.test.locadora;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
