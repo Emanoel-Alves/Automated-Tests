@@ -41,10 +41,9 @@ public class Filme implements Serializable {
 		super();
 	}
 
-	public Filme(Integer id, @NotNull String name, @NotNull String category, @NotNull BigDecimal price,
+	public Filme(@NotNull String name, @NotNull String category, @NotNull BigDecimal price,
 			@NotNull BigDecimal quantity, @NotNull String description) {
 		super();
-		this.id = id;
 		this.name = name;
 		this.category = category;
 		this.price = price;
