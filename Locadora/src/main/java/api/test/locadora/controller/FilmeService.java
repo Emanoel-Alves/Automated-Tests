@@ -3,6 +3,7 @@ package api.test.locadora.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,9 +13,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
+
+import javax.annotation.PostConstruct;
 
 import api.test.locadora.model.Filme;
 import api.test.locadora.repository.FilmeRepository;
@@ -22,6 +24,7 @@ import api.test.locadora.repository.FilmeRepository;
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping(value = "/Locadora/api")
+@Service
 public class FilmeService {
 	
 	@Autowired
@@ -29,16 +32,15 @@ public class FilmeService {
 
 	@GetMapping("/filmes")
 	public ResponseEntity<List<Filme>> getFilmes() {
-
 		return new ResponseEntity<List<Filme>>(filmeRepository.findAll(), HttpStatus.OK);
 	}
-	@GetMapping("/search/{name}") 
-	public ResponseEntity <List<Filme>> search(@PathVariable(value = "name") String name){
-		System.out.println("name: "+name);
-		List<Filme> filme = filmeRepository.findByFilmeNameStartingWith(name);
-	
-		return new ResponseEntity<List<Filme>>(filme,HttpStatus.OK);
-	}
+//	@GetMapping("/search/{name}") 
+//	public ResponseEntity <List<Filme>> search(@PathVariable(value = "name") String name){
+//		System.out.println("name: "+name);
+//		List<Filme> filme = filmeRepository.findByFilmeNameStartingWith(name);
+//	
+//		return new ResponseEntity<List<Filme>>(filme,HttpStatus.OK);
+//	}
 	@GetMapping("/filmes/{id}")
 	public ResponseEntity<Filme> getProduct(@PathVariable(value = "id") Integer id) {
 
@@ -52,10 +54,10 @@ public class FilmeService {
 	}
 
 	@PostMapping("/filme")
-	public ResponseEntity<Filme> saveFilme(String name, String category, BigDecimal price, BigDecimal quantity,
+	public ResponseEntity<Filme> saveFilme(String name, String category, double price, double quantity,
 			String description) {
 
-		if (name == null || category == null || price == null || quantity == null || description == null
+		if (name == null || category == null || description == null
 			 || name.equals("null") || category.equals("null") || description.equals("null")) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
@@ -84,9 +86,9 @@ public class FilmeService {
 
 	@PutMapping("/filme/{id}")
 	public ResponseEntity<Filme> updateFilme(@PathVariable("id") Integer id, String name, String category,
-			BigDecimal price, BigDecimal quantity, String description) {
+			double price, double quantity, String description) {
 
-		if (name == null || category == null || price == null || quantity == null || description == null
+		if (name == null || category == null || description == null
 				|| category.equals("null") || description.equals("null")) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
@@ -105,5 +107,13 @@ public class FilmeService {
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
+	}
+	
+	@PostConstruct
+    public void population() {
+		filmeService.saveFilme("Os 3 patetas", "Acao",  5, 4, "Filme de comedia");
+		filmeService.saveFilme("Pequena Sereia", "Romance",  5, 4, "Filme de peixe que fala");
+		filmeService.saveFilme("Matrix", "Acao",  5, 4, "Nao precisava de um 4 filme");
+		filmeService.saveFilme("Fuga das galinha", "Acao",  5, 4, "Filme de comedia");
 	}
 }

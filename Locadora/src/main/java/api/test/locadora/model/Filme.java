@@ -1,7 +1,6 @@
 package api.test.locadora.model;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,10 +27,10 @@ public class Filme implements Serializable {
 	private String category;
 	
 	@NotNull
-	private BigDecimal price;
+	private double price;
 	
 	@NotNull
-	private BigDecimal quantity;
+	private double quantity;
 	
 	@NotNull
 	@Column(columnDefinition="TEXT")
@@ -41,8 +40,8 @@ public class Filme implements Serializable {
 		super();
 	}
 
-	public Filme(@NotNull String name, @NotNull String category, @NotNull BigDecimal price,
-			@NotNull BigDecimal quantity, @NotNull String description) {
+	public Filme(@NotNull String name, @NotNull String category, @NotNull double price,
+			@NotNull double quantity, @NotNull String description) {
 		super();
 		this.name = name;
 		this.category = category;
@@ -75,19 +74,19 @@ public class Filme implements Serializable {
 		this.category = category;
 	}
 
-	public BigDecimal getPrice() {
+	public double getPrice() {
 		return price;
 	}
 
-	public void setPrice(BigDecimal price) {
+	public void setPrice(double price) {
 		this.price = price;
 	}
 
-	public BigDecimal getQuantity() {
+	public double getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(BigDecimal quantity) {
+	public void setQuantity(double quantity) {
 		this.quantity = quantity;
 	}
 
