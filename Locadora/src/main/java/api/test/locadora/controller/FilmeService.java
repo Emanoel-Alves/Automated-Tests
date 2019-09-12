@@ -32,13 +32,13 @@ public class FilmeService {
 
 		return new ResponseEntity<List<Filme>>(filmeRepository.findAll(), HttpStatus.OK);
 	}
-	@GetMapping("/search/{name}") 
-	public ResponseEntity <List<Filme>> search(@PathVariable(value = "name") String name){
-		System.out.println("name: "+name);
-		List<Filme> filme = filmeRepository.findByFilmeNameStartingWith(name);
-	
-		return new ResponseEntity<List<Filme>>(filme,HttpStatus.OK);
-	}
+//	@GetMapping("/search/{name}") 
+//	public ResponseEntity <List<Filme>> search(@PathVariable(value = "name") String name){
+//		System.out.println("name: "+name);
+//		List<Filme> filme = filmeRepository.findByFilmeNameStartingWith(name);
+//	
+//		return new ResponseEntity<List<Filme>>(filme,HttpStatus.OK);
+//	}
 	@GetMapping("/filmes/{id}")
 	public ResponseEntity<Filme> getProduct(@PathVariable(value = "id") Integer id) {
 
