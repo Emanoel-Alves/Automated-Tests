@@ -26,19 +26,24 @@ public class FilmeService {
 	
 	@Autowired
 	FilmeRepository filmeRepository;
-
+	
 	@GetMapping("/filmes")
 	public ResponseEntity<List<Filme>> getFilmes() {
-
 		return new ResponseEntity<List<Filme>>(filmeRepository.findAll(), HttpStatus.OK);
 	}
-//	@GetMapping("/search/{name}") 
-//	public ResponseEntity <List<Filme>> search(@PathVariable(value = "name") String name){
-//		System.out.println("name: "+name);
-//		List<Filme> filme = filmeRepository.findByFilmeNameStartingWith(name);
-//	
-//		return new ResponseEntity<List<Filme>>(filme,HttpStatus.OK);
-//	}
+	
+	@GetMapping("/search/{name}") 
+	public ResponseEntity<Filme> search(@PathVariable(value = "name") String name){
+		System.out.println("name: "+name);
+		Optional<Filme> filme = filmeRepository.findByName(name);
+	
+		if (filme.isPresent()) {
+			return new ResponseEntity<Filme>(filme.get(), HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+	
 	@GetMapping("/filmes/{id}")
 	public ResponseEntity<Filme> getProduct(@PathVariable(value = "id") Integer id) {
 
@@ -57,6 +62,7 @@ public class FilmeService {
 
 		if (name == null || category == null || price == null || quantity == null || description == null
 			 || name.equals("null") || category.equals("null") || description.equals("null")) {
+			System.out.println("entrou aqui 😀😀");
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 
