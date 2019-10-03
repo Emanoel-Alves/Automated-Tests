@@ -34,7 +34,7 @@ public class FilmeService {
 	
 	@GetMapping("/search/{name}") 
 	public ResponseEntity<Filme> search(@PathVariable(value = "name") String name){
-		System.out.println("name: "+name);
+
 		Optional<Filme> filme = filmeRepository.findByName(name);
 	
 		if (filme.isPresent()) {
@@ -62,7 +62,7 @@ public class FilmeService {
 
 		if (name == null || category == null || price == null || quantity == null || description == null
 			 || name.equals("null") || category.equals("null") || description.equals("null")) {
-			System.out.println("entrou aqui 😀😀");
+
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 
