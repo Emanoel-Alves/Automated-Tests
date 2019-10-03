@@ -1,6 +1,6 @@
 package api.test.locadora.controller;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.math.BigDecimal;
@@ -27,7 +27,7 @@ public class FilmeServiceTest {
 	@Autowired
 	private FilmeService filmeService;
 	
-	@BeforeEach
+	@AfterEach
     public void setUp() throws Exception {
 		
 //			repository.deleteAll();
@@ -68,8 +68,27 @@ public class FilmeServiceTest {
 	
 	@DisplayName("Teste de busca")
 	@Test
-	public void testForSearc() throws Exception{
-//		assertTrue(filmeService.search("A Freira").status(HttpStatus.NOT_FOUND.value()));
+	public void testForSearch() throws Exception{
+		assertEquals(HttpStatus.OK.value(), filmeService.search("A Freira").getStatusCodeValue());
 	}
 	
+	@DisplayName("Teste de retorno dos filmes cadastrados")
+	@Test
+	public void testForReturnList() throws Exception{
+		assertEquals(HttpStatus.OK.value(), filmeService.getFilmes().getStatusCodeValue());
+	}
+	
+	@DisplayName("Tesde de unicidade dos filmes cadastrados")
+	@Test
+	public void testOfUnicidade() throws Exception {
+		if(HttpStatus.OK.value() == filmeService.saveFilme("It", "Terror", new BigDecimal("5.0"), new BigDecimal("5.0"), "Muito medo").getStatusCodeValue()) {
+			fail("O metodo salvar cadastra mais de um filme com o mesmo nome ou parametros com dados iguais");
+		}
+	}
+	
+	@DisplayName("Teste de atualizacao de filme")
+	@Test
+	public void testForUpdate() throws Exception{
+		assertEquals(HttpStatus.OK.value(), filmeService.updateFilme(331, "null", "Medo", new BigDecimal("12.0"), new BigDecimal("22.0"), "Filme so para maiores").getStatusCodeValue());
+	}
 }
